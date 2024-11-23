@@ -4,7 +4,7 @@ const uuid = require('uuid')
 const data = require('../data.json')
 const path = require('path')
 const fs = require('fs')
-const { log } = require('console')
+// const { log } = require('console')
 
 // Permite crear una nueva reserva
 const newBooking = (req, res) => {
@@ -139,7 +139,8 @@ const filterBookingRoom = (req, res) => {
     res.json(booking)
 }
 
-// Permite filtrar las reservas por cantidad de huéspedes
+// Permite filtrar las reservas con una cantidad mayor a X huéspedes 
+// (esto se establece por requerimientos del proyecto donde se solicita filtrar las reservas que tengan MÁS de 5 huéspedes)
 const filterBookingGuests = (req, res) => {
     const guestsQuery = Number(req.query.cantidadHuespedes)
     const booking = data.bookings.filter(b => b.cantidadHuespedes > guestsQuery);
