@@ -1,3 +1,4 @@
+// Se importan y llaman el modelo y las librerías requeridas
 const Booking = require('../Models/Booking.js')
 const uuid = require('uuid')
 const data = require('../data.json')
@@ -5,6 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const { log } = require('console')
 
+// Permite crear una nueva reserva
 const newBooking = (req, res) => {
     const id = uuid.v4()
     const {
@@ -17,6 +19,7 @@ const newBooking = (req, res) => {
     res.json(booking)
 }
 
+// Permite mostrar todas las reservas
 const showAllBookings = (req, res) => {
     res.json({
         message: 'Estas son todas las reservas realizadas',
@@ -24,6 +27,7 @@ const showAllBookings = (req, res) => {
     })
 }
 
+// Permite modificar una reserva
 const updateBooking = (req, res) => {
     const id = req.params.id;
     const bookingIndex = data.bookings.findIndex((booking) => String(booking.id) === String(id));
@@ -48,6 +52,7 @@ const updateBooking = (req, res) => {
     });
 }
 
+// Permite eliminar una reserva
 const deleteBookingById = (req, res) => {
     const id = req.params.id;
     const bookingIndex = data.bookings.findIndex((booking) => String(booking.id) === String(id));
@@ -60,6 +65,7 @@ const deleteBookingById = (req, res) => {
     res.json('Reserva eliminada con éxito')
 }
 
+// Permite filtrar una reserva por su id
 const filterBookingId = (req, res) => {
     const booking = data.bookings.find(b => b.id === Number(req.params.id))
     if(!booking) {
@@ -68,6 +74,8 @@ const filterBookingId = (req, res) => {
     res.json(booking)
 }
 
+// Permite filtrar las reservas realizadas a la fecha actual...
+// (será necesario crear una reserva donde la fechaInicio sea la misma del día que se revise el proyecto)
 const filterBookingToday = (req, res) => {
     const today = new Date().toISOString().split('T')[0];
     const filteredBookings = data.bookings.filter(b => {
@@ -80,6 +88,7 @@ const filterBookingToday = (req, res) => {
     res.json(filteredBookings);
 }
 
+// Permite filtrar las reservas por un rango de fecha
 const filterBookingDateRange = (req, res) => {
     const {fechaInicio, fechaFin} = req.query
     
@@ -100,6 +109,7 @@ const filterBookingDateRange = (req, res) => {
     res.json(filteredBookings)
 }
 
+// Permite filtrar las reservas por estado
 const filterBookingStatus = (req, res) => {
     const estadoQuery = req.query.estado?.toLowerCase();
     const booking = data.bookings.filter(b => b.estado.toLowerCase() === estadoQuery);
@@ -109,6 +119,7 @@ const filterBookingStatus = (req, res) => {
     res.json(booking)
 }
 
+// Permite filtrar las reservas por Hotel
 const filterBookingHotel = (req, res) => {
     const hotelQuery = req.query.hotel?.toLowerCase();
     const booking = data.bookings.filter(b => b.hotel.toLowerCase() === hotelQuery);
@@ -118,6 +129,7 @@ const filterBookingHotel = (req, res) => {
     res.json(booking)
 }
 
+// Permite filtrar las reservas por tipo de habitación
 const filterBookingRoom = (req, res) => {
     const roomQuery = req.query.tipoHabitacion?.toLowerCase();
     const booking = data.bookings.filter(b => b.tipoHabitacion.toLowerCase() === roomQuery);
@@ -127,6 +139,7 @@ const filterBookingRoom = (req, res) => {
     res.json(booking)
 }
 
+// Permite filtrar las reservas por cantidad de huéspedes
 const filterBookingGuests = (req, res) => {
     const guestsQuery = Number(req.query.cantidadHuespedes)
     const booking = data.bookings.filter(b => b.cantidadHuespedes > guestsQuery);
@@ -136,6 +149,7 @@ const filterBookingGuests = (req, res) => {
     res.json(booking)
 }
 
+// Se exportan los controladores
 module.exports = {
     newBooking,
     showAllBookings,
