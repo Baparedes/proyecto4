@@ -4,7 +4,6 @@ const uuid = require('uuid')
 const data = require('../data.json')
 const path = require('path')
 const fs = require('fs')
-// const { log } = require('console')
 
 // Permite crear una nueva reserva
 const newBooking = (req, res) => {
